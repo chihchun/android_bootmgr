@@ -103,6 +103,15 @@ int main(int argc, char **argv)
 
     // backup the image
     if(!strncmp(argv[1], "-b", 2*sizeof(char))) {
+	char* out_sha1sum = malloc(SHA_DIGEST_STR_SIZE*sizeof(char));
+	int out_filesize;
+
+        // check if files have same checksum
+	if(verify(argv[3], out_sha1sum, &out_filesize, 0) == 0) 
+	    if(strncmp(sha1sum, out_sha1sum, SHA_DIGEST_STR_SIZE) == 0)
+		    return 0;
+
+
         unsigned int dataleft = filesize;
         FILE *in;
         FILE *out;
