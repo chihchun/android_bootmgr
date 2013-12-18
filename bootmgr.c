@@ -17,12 +17,12 @@
 
 #ifdef __ANDROID__
 #define debug(fmt, ...) do { \
-    printf("%s:%d: " fmt, __FILE__, __LINE__, __VA_ARGS__); \
-    ALOGV("%s:%d: " fmt, __FILE__, __LINE__, __VA_ARGS__); \
+    printf(fmt, __VA_ARGS__); \
+    ALOGV(fmt,__VA_ARGS__); \
 } while(0)
 #else
 #define debug(fmt, ...) do { \
-    printf("%s:%d: " fmt, __FILE__, __LINE__, __VA_ARGS__); \
+    printf(fmt, __VA_ARGS__); \
 } while(0)
 #endif
 
@@ -53,19 +53,19 @@ int verify(char* filename, char* sha1sum, int* size, int verbose)
     snprintf(sha1sum, SHA_DIGEST_STR_SIZE, "%X%X%X%X%X", hdr.id[0], hdr.id[1], hdr.id[2], hdr.id[3], hdr.id[4]);
 
     if(verbose) {
-        printf("Magic: %.*s\n", BOOT_MAGIC_SIZE, hdr.magic);
-        printf("ID: %s\n", sha1sum);
-        printf("Kernel size: 0x%X (%d)\n", hdr.kernel_size, hdr.kernel_size);
-        printf("Kernel addr: 0x%X\n", hdr.kernel_addr);
-        printf("Ramdisk size: 0x%X (%d)\n", hdr.ramdisk_size, hdr.ramdisk_size);
-        printf("Ramdisk addr: 0x%X\n", hdr.ramdisk_addr);
+        debug("Magic: %.*s\n", BOOT_MAGIC_SIZE, hdr.magic);
+        debug("ID: %s\n", sha1sum);
+        debug("Kernel size: 0x%X (%d)\n", hdr.kernel_size, hdr.kernel_size);
+        debug("Kernel addr: 0x%X\n", hdr.kernel_addr);
+        debug("Ramdisk size: 0x%X (%d)\n", hdr.ramdisk_size, hdr.ramdisk_size);
+        debug("Ramdisk addr: 0x%X\n", hdr.ramdisk_addr);
 
-        printf("Second size: 0x%X (%d)\n", hdr.second_size, hdr.second_size);
-        printf("Second addr: 0x%X\n", hdr.second_addr);
-        printf("Tags addr: 0x%X\n", hdr.tags_addr);
-        printf("Page size: 0x%X (%d)\n", hdr.page_size, hdr.page_size);
-        printf("Name: %.*s\n", BOOT_NAME_SIZE, hdr.name);
-        printf("Cmdline: %.*s\n", BOOT_ARGS_SIZE, hdr.cmdline);
+        debug("Second size: 0x%X (%d)\n", hdr.second_size, hdr.second_size);
+        debug("Second addr: 0x%X\n", hdr.second_addr);
+        debug("Tags addr: 0x%X\n", hdr.tags_addr);
+        debug("Page size: 0x%X (%d)\n", hdr.page_size, hdr.page_size);
+        debug("Name: %.*s\n", BOOT_NAME_SIZE, hdr.name);
+        debug("Cmdline: %.*s\n", BOOT_ARGS_SIZE, hdr.cmdline);
     }
     return 0;
 }
@@ -79,7 +79,7 @@ int main(int argc, char **argv)
     
 
     if(argc < 3) {
-        printf("Usage: %s [-d(ump)] [-c](checksum) [-b](backup) <boot.img>\n", argv[0]);
+        debug("Usage: %s [-d(ump)] [-c](checksum) [-b](backup) <boot.img>\n", argv[0]);
         return -1;
     }
 
@@ -89,7 +89,7 @@ int main(int argc, char **argv)
     }
 
     if(verify(argv[2], sha1sum, &filesize, dump) < 0) {
-        printf("%s is not a correct image.\n", argv[2]);
+        debug("%s is not a correct image.\n", argv[2]);
         return -1;
     }
     if(dump)
@@ -97,7 +97,7 @@ int main(int argc, char **argv)
 
     // dump the image checksum
     if(!strncmp(argv[1], "-c", 2*sizeof(char))) {
-        printf("%s\n", sha1sum);
+        debug("%s\n", sha1sum);
         return 0;
     }
 
@@ -136,7 +136,7 @@ int main(int argc, char **argv)
         return 0;
     }
 
-    printf("Usage: %s [-d(ump)] [-c](checksum) [-b](backup) <boot.img>\n", argv[0]);
+    debug("Usage: %s [-d(ump)] [-c](checksum) [-b](backup) <boot.img>\n", argv[0]);
     return -1;
 
 }
