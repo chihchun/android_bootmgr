@@ -1,3 +1,5 @@
+# Copyright 2013 Canonical Ltd.
+
 CC=gcc
 CFLAGS=-I. -Wall
 LDFLAGS=

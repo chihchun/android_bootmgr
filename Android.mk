@@ -1,3 +1,4 @@
+# Copyright 2013 Canonical Ltd.
 
 LOCAL_PATH := $(call my-dir)
 

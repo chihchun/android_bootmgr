@@ -1,3 +1,10 @@
+/*
+ * Copyright 2013 Canonical Ltd.
+ * Authros
+ *   Rex Tsai <rex.tsai@canonical.com>
+ *
+ * Copyright 2011 Jens Andersen (@EnJens)
+ */
 
 #include <stdio.h>
 #include <stdlib.h>
